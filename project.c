@@ -23,23 +23,28 @@ int Perimeter(int width, int height)
 		return 0;                           //return 0 if so
 	} 
 	else {
-		return (width + height) * 2;        //return the perimeter of the field
+		int Perimeter = (width + height) * 2;
+		return Perimeter;                   //return the perimeter of the field
 	} 
 }
+
 
 /*This function calculates the volume of the sphere*/
 //input: radius 
 //output: volume
 double Volume(int radius)
-{    
-	if (radius < 0) {
+double Volume(int radius)
+{
+	// return
+	if (radius < 0) {      
 		return 0;
 	}
-	 else {
-	double PI = 3.141592654;              // You may use this value to represent PI
-	return (double) radius * radius * radius * PI * 4/3;
-
+	else {
+		double PI = 3.141592654;              // You may use this value to represent PI
+		double Volume = radius * radius * radius * PI * 4 / 3;
+		return Volume;
 	}
+}
 
 /*This function takes one integer as the upper limit, and return the largest prime number that is less than the upper limit*/
 int PrimeBelow(int upper)
@@ -47,23 +52,42 @@ int PrimeBelow(int upper)
 	if (upper <= 2) {
 		return -1;
 	} 
+	
 	else if {
 		int i;
+		int j;
 		for (i = upper, i > 2, i++) {
-			for (j= i-1, i>=2 , j--)
+			for (j = i - 1, i >= 2, j--)
 				if (i % j == 0) {
 					j--;
 				}
 				else if {
 					return i;
 				}
+		}
 	return 0;
 }
 
-/* Your comment goes here*/
+/*This function is should delete all the vowels in the inputed string*/
+//input: String of characters
+//output: String of characters without vowels
 void Abbreviate(char* word)
 {
-	word[0] = ' ';
+	int i, j;
+	int length = strlen(string);
+	int toDelete[4] = { a,e,i,o,u }
+
+	for (i = 0; i<length; i++) {
+
+		if (string[i] == toRemove) {
+			for (j = i; j< length-1; j++) {
+				string[j] = string[j + 1];
+			}
+			length--;
+			string[length] = '\0';
+			i--;
+		}
+	}
 }
 
 /* Your comment goes here*/
