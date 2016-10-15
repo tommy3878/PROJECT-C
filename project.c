@@ -62,31 +62,30 @@ int PrimeBelow(int upper)
 /* Your comment goes here*/
 void Abbreviate(char* word)
 {
-	char wordA[MAX_ARRAY_SIZE];
-	int i;
-	int j;
-	int length = strlen(wordA);
-
-	for (i = 0; i < length; i++) {
-	 /*
-         * If the character to remove is found then shift all characters to one
-         * place left and decrement the length of string by 1.
-         */
-		
-		if (wordA[i] == 'a' || wordA[i] == 'e' || wordA[i] == 'i' || wordA[i] == 'o' || wordA[i] == 'u') {
-			{
-				for (j = i; j < length - 1; j++) {
-					wordA[j] = wordA[j + 1];
-				}
-				length--;
-				wordA[length] = '\0';
-			 // If a character is removed then make sure i doesn't increments
-				i--;
-			}
-		}
-	}
+    int i,j;
+    unsigned long l;
+    
+    l = strlen(word);
+    for (i=0; i <= l; i++) {
+        switch (*(word+i)) {
+            case 'a':
+            case 'e':
+            case 'i':
+            case 'o':
+            case 'u':
+                // if a char is a vowel, then re-arrange of the array is triggered
+                for (j=i; j<= l; j++) {
+                    // Replace string from next char
+                    *(word+j) = *(word+(j+1));
+                }
+                l--; // Reset the length of the array
+                i--;
+                break;
+            default:
+                break;
+        }
+    }
 }
-
 
 /* Your comment goes here*/
 void Strikeout(char *hide, char *phrase)
