@@ -42,23 +42,21 @@ double Volume(int radius)
 /* Your comment goes here*/
 int PrimeBelow(int upper)
 {
-	if (upper <= 2) {
-		return -1;
-	}
-
-	else if {
-		int i;
-		int j;
-		for (i = upper, i > 2, i++) {
-			for (j = i - 1, i >= 2, j--)
-				if (i % j == 0) {
-					j--;
-				}
-				else if {
-					return i;
-				}
-		}
-		return 0;
+    if (upper <= 2){
+        return -1;
+    } else {
+        int i, n;
+        for (n = upper - 1; n > 2; n--) {
+            for ( i = 2 ; i <= n - 1 ; i++ )
+            {
+                if ( n%i == 0 )
+                    break;
+            }
+            if ( i == n )
+                return n;
+        }
+    }
+   return 0;
 }
 
 /* Your comment goes here*/
