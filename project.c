@@ -64,15 +64,28 @@ int PrimeBelow(int upper)
 /* Your comment goes here*/
 void Abbreviate(char* word)
 {
-        int i;
+	char wordA[MAX_ARRAY_SIZE];
+	int i;
 	int j;
-	int length = strlen(word);
-	char word[MAX_ARRAY_SIZE];
+	int length = strlen(wordA);
 
-	for (i = 0; i<length; i++) {
-            if (word[i] == 'a' || word[i] == 'e' || word[i] == 'i' || word[i] == 'o' || word[i] == 'u') {
-			word[i] = '\0';	   
-	    }
+	for (i = 0; i < length; i++) {
+	 /*
+         * If the character to remove is found then shift all characters to one
+         * place left and decrement the length of string by 1.
+         */
+		
+		if (wordA[i] == 'a' || wordA[i] == 'e' || wordA[i] == 'i' || wordA[i] == 'o' || wordA[i] == 'u') {
+			{
+				for (j = i; j < length - 1; j++) {
+					wordA[j] = wordA[j + 1];
+				}
+				length--;
+				wordA[length] = '\0';
+			 // If a character is removed then make sure i doesn't increments
+				i--;
+			}
+		}
 	}
 }
 
