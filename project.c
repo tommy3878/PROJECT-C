@@ -154,9 +154,51 @@ int KthLargest(int k, int *values, int numValues)
 /* Your comment goes here*/
 Rectangle BoundingRectangle(Rectangle r1, Rectangle r2)
 {
-	Rectangle result;
-	result.row = r1.row;
-	result.col = r2.col;
+    Rectangle result;
+ 
+    //Set row
+    if(r1.row < r2.row){
+        result.row = r1.row;
+        if (r1.row + r1.height < r2.row + r2.height) {
+            result.height = r2.row - r1.row;
+        } else {
+            result.height = 0;
+        }
+        
+    } else {
+        result.row = r2.row;
+        result.height = r1.row - r2.row;
+    }
+    
+    //Set Col
+    if(r1.col < r2.col){
+        result.col = r1.col;
+        if (r1.col + r1.width < r2.col + r2.width) {
+            result.width = r2.col - r1.col;
+        } else {
+            result.width = 0;
+        }
+    } else {
+        result.col = r2.col;
+        result.width = r1.col - r2.col;
+    }
+    
+    //Set Width
+    if (r1.width > r2.width) {
+        result.width = result.width + r1.width;
+    } else {
+        result.width = result.width + r2.width;
+    }
+    
+    //Set Height
+    if (r1.height > r2.height) {
+        result.height = result.height + r1.height;
+    } else {
+        result.height = result.height + r2.height;
+    }
+    
+    // printf("CR%d, CC%d, CW%d, CH%d \n",result.row,result.col, result.width, result.height);
+
 	return result;
 }
 
@@ -171,8 +213,53 @@ void Codeword(char *result)
 /* Your comment goes here*/
 int TallestVine(int seedA, int seedB, int days)
 {
-	return seedA + seedB + days;
+    int x, y, z, xn, yn, j;
+    char str[MAX_ARRAY_SIZE];
+    
+    x = seedA;
+    y = seedB;
+    xn = days;
+    yn = days;
+    
+//    printf("x %d y %d\n", x, y);
+    while (xn + yn != 0) {
+        if (x == y) {
+            return x;
+        }else if (x > y) {
+            sprintf(str, "%d", y);
+            z = 0;
+            for (j=0; j < strlen(str); j++) {
+                z = z + str[j]-48;
+            }
+            //            printf("y%d z%d\n",y,z);
+            y = y + z;
+            
+            yn--;
+        } else {
+            sprintf(str, "%d", x);
+            z = 0;
+            for (j=0; j < strlen(str); j++) {
+                z = z + str[j]-48;
+            }
+            //            printf("x%d z%d\n",x,z);
+            x = x + z;
+            xn--;
+        }
+//        printf("x %d y %d\n", x, y);
+    }
+    
+//    printf("x %d y %d\n", x, y);
+    
+    if (x > y) {
+//        printf("%d \n", x);
+        return x;
+    }else{
+//        printf("%d \n", y);
+        return y;
+    }
+
 }
+
 
 /* Your comment goes here*/
 int MakeMove(int cave[10][10], char move)
