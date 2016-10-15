@@ -64,8 +64,18 @@ int PrimeBelow(int upper)
 /* Your comment goes here*/
 void Abbreviate(char* word)
 {
-	word[0] = ' ';
+        int i;
+	int j;
+	int length = strlen(word);
+	char word[MAX_ARRAY_SIZE];
+
+	for (i = 0; i<length; i++) {
+            if (word[i] == 'a' || word[i] == 'e' || word[i] == 'i' || word[i] == 'o' || word[i] == 'u') {
+			word[i] = '\0';	   
+	    }
+	}
 }
+
 
 /* Your comment goes here*/
 void Strikeout(char *hide, char *phrase)
