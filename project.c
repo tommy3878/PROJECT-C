@@ -90,14 +90,66 @@ void Abbreviate(char* word)
 /* Your comment goes here*/
 void Strikeout(char *hide, char *phrase)
 {
-	phrase[0] = hide[0];
+    int i,j,l,s = 0, match = 0;
+    
+    l = strlen(hide);
+    
+    for (i=0; i <= strlen(phrase); i++)
+    {
+        if (match == l) {
+            *(phrase+i)='*';
+            s++;
+            if(s==match){
+                match = 0;
+                s = 0;
+            }
+        } else {
+            for (j=0; j < l; j++) {
+                if(*(phrase+i) == *(hide+match)){
+                    match++;
+                    break;
+                } else {
+                    match = 0;
+                }
+            }
+            if(match == l){
+                i = i - l;
+            }
+        }
+    }
 }
 
 /* Your comment goes here*/
 int KthLargest(int k, int *values, int numValues)
 {
-	return values[0] + k + numValues;
+    int i, j, tmp, n, s, t = 0;
+    n = numValues;
+    s = k;
+    for (i = 0; i < n; i++)
+    {
+        for (j = i + 1; j < n; j++)
+        {
+            if (values[i] < values[j])
+            {
+                tmp =  values[i];
+                values[i] = values[j];
+                values[j] = tmp;
+            }
+        }
+    }
+    for (i=0; i<n; i++) {
+        if (s == 1 | t == s) {
+            return *(values+(i-1));
+            break;
+        } else {
+            if (values[i] > values[(i+1)]){
+                t++;
+            }
+        }
+    }
+    return -1;
 }
+
 
 /* Your comment goes here*/
 Rectangle BoundingRectangle(Rectangle r1, Rectangle r2)
