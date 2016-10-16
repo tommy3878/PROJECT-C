@@ -264,6 +264,175 @@ int TallestVine(int seedA, int seedB, int days)
 /* Your comment goes here*/
 int MakeMove(int cave[10][10], char move)
 {
-	cave[0][0] = 0 + move;
-	return -1;
+    char cmd;
+    int caverRow = 0, caverCol = 0;
+    int row = 0, col = 0;
+    int cmdRow = 0, cmdCol = 0;
+    
+    printf("\nTesting MakeMove()...\n");
+    
+    // Print matrix
+    for (int row=0; row<10; row++)
+    {
+        for(int col=0; col<10; col++)
+            printf("%d     ", cave[row][col]);
+        printf("\n");
+    }
+    
+    // Locate the caver for action
+    for (int row=0; row<10; row++)
+    {
+        for(int col=0; col<10; col++)
+            if(cave[row][col] == 3){
+                caverRow = row;
+                caverCol = col;
+                break;
+            }
+    }
+    
+    printf("caverR%d caverC%d \n",caverRow,caverCol);
+    
+    // Action
+    cmd = move;
+    printf("command :%c \n", cmd);
+    
+    // down
+    printf("command Down :%c \n", cmd);
+    switch (cmd) {
+        case 's': //Down
+            cmdRow = caverRow+1;
+            cmdCol = caverCol;
+            break;
+        case 'w': //Up
+            cmdRow = caverRow-1;
+            cmdCol = caverCol;
+            break;
+        case 'a': //Left
+            cmdRow = caverRow;
+            cmdCol = caverCol-1;
+            break;
+        case 'd': //Right
+            cmdRow = caverRow;
+            cmdCol = caverCol+1;
+            break;
+        default:
+            break;
+    }
+
+    
+    
+    printf("cmdR%d cmdC%d \n",cmdRow,cmdCol);
+    printf("cave value %d \n",cave[cmdRow][cmdCol]);
+    // move object
+    if (cave[cmdRow][cmdCol] == 0) { //Move if space available
+        cave[cmdRow][cmdCol] = 3; //Move a step only
+        cave[caverRow][caverCol] = 0; //Clear up old position
+    } else if (cave[cmdRow][cmdCol] == 1 && cave[cmdRow][cmdCol] == 3){ //Stop if wall or another caver
+        return 0;
+    } else if (cave[cmdRow][cmdCol] == 2){//If a boulder exist
+        cave[cmdRow][cmdCol] = 3; // Move boulder
+        cave[caverRow][caverCol] = 0; // caver move
+        
+        switch (cmd) {
+            case 's':
+                for (int row=cmdRow+1; row<10; row++)
+                {
+                    printf("row :%d \n", row);
+                    printf("Cave value %d\n",cave[row][cmdCol]);
+                    switch (cave[row][cmdCol]) {
+                        case 1: //Hit the wall
+                            cave[row-1][cmdCol] = 2;
+                            //Print Matrx for debuging
+                            for (int row=0; row<10; row++)
+                            {
+                                for(int col=0; col<10; col++)
+                                    printf("%d     ", cave[row][col]);
+                                printf("\n");
+                            }
+                            //End of Print Matrx
+                            break;
+                        case 3: //Killing caver haha :P
+                            cave[row][cmdCol] = 0;
+                            return 0;
+                        case 4: //Filling hole
+                            cave[row][cmdCol] = 0;
+                            return 1;
+                        default:
+                            break;
+                    }
+                }
+                break;
+            case 'w':
+                for (int row=cmdRow-1; row>=0; row--)
+                {
+                    printf("row :%d \n", row);
+                    printf("Cave value %d\n",cave[row][cmdCol]);
+                    switch (cave[row][cmdCol]) {
+                        case 1: //Hit the wall
+                            cave[row+1][cmdCol] = 2;
+                            break;
+                        case 3: //Killing caver haha :P
+                            cave[row][cmdCol] = 0;
+                            return 0;
+                        case 4: //Filling hole
+                            cave[row][cmdCol] = 0;
+                            return 1;
+                        default:
+                            break;
+                    }
+                }
+                break;
+            case 'a':
+                for (int col=cmdCol-1; col>=0; col--)
+                {
+                    printf("row :%d \n", col);
+                    printf("Cave value %d\n",cave[cmdRow][col]);
+                    switch (cave[cmdRow][col]) {
+                        case 1: //Hit the wall
+                            cave[cmdRow][col+1] = 2;
+                            break;
+                        case 3: //Killing caver haha :P
+                            cave[cmdRow][col] = 0;
+                            return 0;
+                        case 4: //Filling hole
+                            cave[cmdRow][col] = 0;
+                            return 1;
+                        default:
+                            break;
+                    }
+                }
+                break;
+            case 'd':
+                for (int col=cmdCol+1; col<10; col++)
+                {
+                    printf("row :%d \n", col);
+                    printf("Cave value %d\n",cave[cmdRow][col]);
+                    switch (cave[cmdRow][col]) {
+                        case 1: //Hit the wall
+                            cave[cmdRow][col-1] = 2;
+                            break;
+                        case 3: //Killing caver haha :P
+                            cave[cmdRow][col] = 0;
+                            return 0;
+                        case 4: //Filling hole
+                            cave[cmdRow][col] = 0;
+                            return 1;
+                        default:
+                            break;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+        return 0;
+    } else if (cave[cmdRow][cmdCol] == 4){ //Failling into hole
+        cave[caverRow][caverCol] = 0;
+        return 1;
+    } else if (cave[cmdRow][cmdCol] == 5){ //Exist the Cave
+        cave[caverRow][caverCol] = 0;
+        cave[cmdRow][cmdCol] = 3;
+        return 2;
+    }
+    return 0;
 }
